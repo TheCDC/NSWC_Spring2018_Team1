@@ -42,7 +42,7 @@ while rval:
         rval, frame = vc.read()
     else:
         frame = cv2.imread(args.image)
-
+    # frame = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
     # load the example image and convert it to grayscale
     # image = cv2.imread(args.image)
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -52,6 +52,9 @@ while rval:
     if args.preprocess == "thresh":
         gray = cv2.threshold(gray, 0, 255,
                              cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
+        # gray = cv2.adaptiveThreshold(
+        #     cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY), 255,
+        #     cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 115, 1)
 
     # make a check to see if median blurring should be done to remove
     # noise
@@ -65,9 +68,10 @@ while rval:
 
     # load the image as a PIL/Pillow image, apply OCR, and then delete
     # the temporary file
-    text = pytesseract.image_to_string(Image.open(filename))
+    text = pytesseract.image_to_string(Image.fromarray(cv2.cvtColor(gray,cv2.COLOR_GRAY2RGB)))
     os.remove(filename)
     print(text)
+    print('=' * 50)
 
     # show the output images
     cv2.imshow("Image", frame)
