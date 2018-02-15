@@ -68,7 +68,8 @@ while rval:
 
     # load the image as a PIL/Pillow image, apply OCR, and then delete
     # the temporary file
-    text = pytesseract.image_to_string(Image.fromarray(cv2.cvtColor(gray,cv2.COLOR_GRAY2RGB)))
+    text = pytesseract.image_to_string(
+        Image.fromarray(cv2.cvtColor(gray, cv2.COLOR_GRAY2RGB)))
     os.remove(filename)
     print(text)
     print('=' * 50)
