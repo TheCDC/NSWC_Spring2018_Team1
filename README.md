@@ -13,10 +13,13 @@ OpenCV bindings for python can be installed from pypi via the pip package manage
 ## Tutorials
 ### OpenCV
 https://pythonprogramming.net/loading-images-python-opencv-tutorial/
+
 The Tesseract engine was used for the image text analysis.
 https://www.pyimagesearch.com/2017/07/10/using-tesseract-ocr-python/
+
+
 ### Python
-This was useful for the learning of the python programming language used to program in OpenCV.. 
+This was useful for the learning of the python programming language used to program in OpenCV.
 https://developers.google.com/edu/python/
 
 
