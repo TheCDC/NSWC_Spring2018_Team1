@@ -7,6 +7,7 @@ http://sdk.rethinkrobotics.com/intera/Workstation_Setup
 https://robferguson.org/blog/2017/10/06/how-to-install-opencv-and-python-using-homebrew-on-macos-sierra/
 ### Linux
 OpenCV bindings for python can be installed from pypi via the pip package manager.
+
 `pip3 install opencv-python`
 
 ## Tutorials
