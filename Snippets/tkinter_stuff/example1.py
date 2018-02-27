@@ -4,10 +4,21 @@ top = tkinter.Tk()
 
 
 def helloCallBack():
-    tkinter.messagebox.showinfo("Hello Python", "Hello World")
+    x = tkinter.messagebox.showinfo("Hello Python", "Hello World")
+    print(x)
 
 
-B = tkinter.Button(top, text="Hello", command=helloCallBack)
+def callback_maker(i, m):
+    def inner():
+        print(tkinter.messagebox.showinfo(i, m))
 
-B.pack()
+    return inner
+
+
+messages = list('abcd')
+for index, m in enumerate(messages):
+
+    b = tkinter.Button(top, text=m, command=callback_maker(index, m))
+
+    b.pack()
 top.mainloop()
