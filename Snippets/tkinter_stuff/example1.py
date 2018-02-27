@@ -9,6 +9,8 @@ def helloCallBack():
 
 
 def callback_maker(i, m):
+    """A closure for dynamically callbacks for the buttons."""
+
     def inner():
         print(tkinter.messagebox.showinfo(i, m))
 
@@ -16,9 +18,10 @@ def callback_maker(i, m):
 
 
 messages = list('abcd')
+# loop over some strings and make buttons
 for index, m in enumerate(messages):
 
-    b = tkinter.Button(top, text=m, command=callback_maker(index, m))
+    b = tkinter.Button(top, text=index, command=callback_maker(index, m))
 
     b.pack()
 top.mainloop()
