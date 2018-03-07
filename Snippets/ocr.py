@@ -51,14 +51,14 @@ while rval:
     # image
     if args.preprocess == "thresh":
         # gray = cv2.threshold(gray, 0, 255, cv2.THRESH_OTSU)[1]
-        threshed = cv2.adaptiveThreshold(gray, 255,
-                                         cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
-                                         cv2.THRESH_BINARY, 115, 1)
-        blur_radius = 2
+        blur_radius = 1
         kernel = np.ones(
             (blur_radius, blur_radius), np.float32) / blur_radius**2
-        blurred = cv2.filter2D(threshed, -1, kernel)
-        gray = blurred
+        blurred = cv2.filter2D(gray, -1, kernel)
+        threshed = cv2.adaptiveThreshold(blurred, 255,
+                                         cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+                                         cv2.THRESH_BINARY, 115, 50)
+        gray = threshed
         # gray = 255 - cv2.Canny(frame, 100, 255)
 
     # make a check to see if median blurring should be done to remove
@@ -76,7 +76,7 @@ while rval:
     text = pytesseract.image_to_string(
         Image.fromarray(cv2.cvtColor(gray, cv2.COLOR_GRAY2RGB)))
     os.remove(filename)
-    f = open('image_process.txt','w')
+    f = open('image_process.txt', 'w')
     f.write(text)
     f.write('=' * 50)
     f.close()
