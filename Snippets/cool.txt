@@ -1,0 +1,8 @@
+python ocr.py --image images/image-7.tiff
+
+python3.6 ocr.py --video --preprocess thresh
+
+
+ffmpeg -i output.avi -r 1 -t 10 image-%d.tiff
+
+python3.6 record.py
