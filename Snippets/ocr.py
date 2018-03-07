@@ -68,7 +68,7 @@ while rval:
 
     # write the grayscale image to disk as a temporary file so we can
     # apply OCR to it
-    filename = "{}.png".format(os.getpid())
+    filename = "{}.tiff".format(os.getpid())
     cv2.imwrite(filename, gray)
 
     # load the image as a PIL/Pillow image, apply OCR, and then delete
@@ -76,6 +76,10 @@ while rval:
     text = pytesseract.image_to_string(
         Image.fromarray(cv2.cvtColor(gray, cv2.COLOR_GRAY2RGB)))
     os.remove(filename)
+    f = open('image_process.txt','w')
+    f.write(text)
+    f.write('=' * 50)
+    f.close()
     print(text)
     print('=' * 50)
 
