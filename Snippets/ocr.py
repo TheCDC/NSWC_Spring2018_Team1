@@ -3,7 +3,7 @@ import pytesseract
 import argparse
 import cv2
 import os
-
+import numpy as np
 # construct the argument parse and parse the arguments
 ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--image", help="path to input image to be OCR'd")
@@ -50,11 +50,16 @@ while rval:
     # check to see if we should apply thresholding to preprocess the
     # image
     if args.preprocess == "thresh":
-        gray = cv2.threshold(gray, 0, 255,
-                             cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
-        # gray = cv2.adaptiveThreshold(
-        #     cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY), 255,
-        #     cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 115, 1)
+        # gray = cv2.threshold(gray, 0, 255, cv2.THRESH_OTSU)[1]
+        threshed = cv2.adaptiveThreshold(gray, 255,
+                                         cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+                                         cv2.THRESH_BINARY, 115, 1)
+        blur_radius = 2
+        kernel = np.ones(
+            (blur_radius, blur_radius), np.float32) / blur_radius**2
+        blurred = cv2.filter2D(threshed, -1, kernel)
+        gray = blurred
+        # gray = 255 - cv2.Canny(frame, 100, 255)
 
     # make a check to see if median blurring should be done to remove
     # noise
