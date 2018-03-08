@@ -24,7 +24,14 @@ ap.add_argument(
     '--camera',
     default=-1,
     type=int,
-    help='Id of webcam to use',
+    help='Index of webcam to use',
+)
+ap.add_argument(
+    '-q',
+    '--quiet',
+    default=False,
+    action='store_true',
+    help='Suppress interactive windows.',
 )
 args = ap.parse_args()
 
@@ -32,9 +39,9 @@ args = ap.parse_args()
 if not (args.image or args.video):
     raise RuntimeError("Must use one of -i or -v")
 rval = True
+
 if args.video:
     vc = cv2.VideoCapture(args.camera)
-
     rval, frame = vc.read()
 
 while rval:
@@ -45,7 +52,7 @@ while rval:
     # frame = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
     # load the example image and convert it to grayscale
     # image = cv2.imread(args.image)
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    gray = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
 
     # check to see if we should apply thresholding to preprocess the
     # image
@@ -78,11 +85,11 @@ while rval:
     os.remove(filename)
     f = open('image_process.txt', 'w')
     f.write(text)
-    f.write('=' * 50)
     f.close()
     print(text)
     print('=' * 50)
-
+    if args.quiet:
+        break
     # show the output images
     cv2.imshow("Image", frame)
     cv2.imshow("Output", gray)
@@ -93,3 +100,6 @@ while rval:
     if not args.video:
         cv2.waitKey(0)
         break
+
+if args.video:
+    vc.close()
