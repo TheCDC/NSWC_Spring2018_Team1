@@ -10,6 +10,7 @@ name = "pypi"
 pytesseract = "*"
 opencv-python = "*"
 pillow = "*"
+flask = "*"
 
 
 [dev-packages]
