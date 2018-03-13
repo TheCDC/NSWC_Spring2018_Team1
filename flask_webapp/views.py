@@ -13,8 +13,7 @@ class IndexView(MethodView):
     def get_context(self, request, **kwargs):
         """Process data given in the request."""
         form = forms.UploadForm()
-        context = dict(
-            form=form)
+        context = dict(form=form)
         # overwrite the context with args, if any
         context.update(**kwargs)
         return context
