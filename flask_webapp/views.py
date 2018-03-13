@@ -14,7 +14,8 @@ class IndexView(MethodView):
         """Process data given in the request."""
         form = forms.UploadForm()
         context = dict(
-            form=form, success=request.args.get('successful_upload'))
+            form=form)
+        # overwrite the context with args, if any
         context.update(**kwargs)
         return context
 
@@ -24,11 +25,8 @@ class IndexView(MethodView):
             self.get_template_name(),
             context=self.get_context(flask.request, **kwargs))
 
-
-class UploadView(MethodView):
     def post(self, **kwargs):
         form = forms.UploadForm()
         if form.validate_on_submit():
-            return flask.redirect(
-                flask.url_for('index', successful_upload=True))
-        return flask.redirect(flask.url_for('index', successful_upload=False))
+            return self.get(successful_upload=True)
+        return self.get(successful_upload=False)

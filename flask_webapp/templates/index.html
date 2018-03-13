@@ -2,20 +2,18 @@
 <!--  -->
 Hello, world.
 <p>
-{{context}}
+    context: {{context}}
 </p>
-{% if context.success %}
+{% if context.successful_upload == True %}
 <p>
-	You uploaded a file.
+    You uploaded a file.
 </p>
 {% endif %}
-
-<form  class="upload_form" method="POST" action="{{url_for('upload')}}" enctype="multipart/form-data">
+<form class="upload_form" method="POST" action="{{url_for('index')}}" enctype="multipart/form-data">
     {{context.form.hidden_tag()}}
     <!--  -->
     {{render_field(context.form.file)}}
-    <input  type="submit" value="submit">
+    <input type="submit" value="submit">
 </form>
 <!--  -->
 {% endblock %}
-
