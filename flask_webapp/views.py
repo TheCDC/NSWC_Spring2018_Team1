@@ -13,7 +13,9 @@ class IndexView(MethodView):
 
     def get_context(self, request, **kwargs):
         """Process data given in the request."""
+        # instantiate the form. It gets what it needs from flask.request
         form = forms.UploadForm()
+        # generate initial context
         context = dict(form=form)
         # over write context with any keyword arguments
         context.update(**kwargs)
@@ -21,7 +23,6 @@ class IndexView(MethodView):
 
     def get(self, **kwargs):
         """Handle get requests."""
-        # generate initial context
         context = self.get_context(flask.request, **kwargs)
         context.update(**kwargs)
         return flask.render_template(self.get_template_name(), context=context)
