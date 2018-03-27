@@ -17,7 +17,7 @@ B.pack()
 
 
 def callback_maker(i, m):
-    """A closure for dynamically callbacks for the buttons."""
+    """A closure for dynamically generating callbacks for the buttons."""
 
     def inner():
         print(tkinter.messagebox.showinfo(i, m))
