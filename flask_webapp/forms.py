@@ -1,4 +1,5 @@
-"""Class based forms that automatically handle validation."""
+"""Class based forms that automatically handle validation.
+"""
 import flask_wtf
 from flask_wtf.file import FileField, FileRequired
 
