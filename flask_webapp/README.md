@@ -16,7 +16,7 @@
 
 # Adding endpoints
 
-The workflo for adding an endpoint goes like this:
+The workflow for adding an endpoint goes like this:
 
  - Create the view class in views.py and defined the necessary get/post methods. The classes don't technically need any other methods.
  - Add the url rule to the in `__init__.py`
