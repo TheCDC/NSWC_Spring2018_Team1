@@ -12,7 +12,7 @@
 
 `pipenv shell` will load you into the virtual environment.
 
-`flask run` will start the server for the web app. The `flask` command is provided by the flask python package. The `.env` file contains the environment variables necessary for the `flask` command.
+`flask run` will start the server for the web app. The `flask` command is provided by the flask python package. The `.env` file contains the environment variables necessary for the `flask` command, there's no magic.
 
 # Adding endpoints
 
