@@ -1,7 +1,10 @@
 """Class based views for the webapp."""
 import flask
 from flask.views import MethodView
+from werkzeug import secure_filename
 from . import forms
+from . import ocr
+import os
 
 
 class IndexView(MethodView):
@@ -13,7 +16,9 @@ class IndexView(MethodView):
 
     def get_context(self, request, **kwargs):
         """Process data given in the request."""
+        # instantiate the form. It gets what it needs from flask.request
         form = forms.UploadForm()
+        # generate initial context
         context = dict(form=form)
         # over write context with any keyword arguments
         context.update(**kwargs)
@@ -21,7 +26,6 @@ class IndexView(MethodView):
 
     def get(self, **kwargs):
         """Handle get requests."""
-        # generate initial context
         context = self.get_context(flask.request, **kwargs)
         context.update(**kwargs)
         return flask.render_template(self.get_template_name(), context=context)
@@ -30,5 +34,11 @@ class IndexView(MethodView):
         form = forms.UploadForm()
         if form.validate_on_submit():
             file = flask.request.files[form.file.name]
+            name = secure_filename(file.filename)
+            old_path = os.path.join(os.path.dirname(__file__), 'uploads', name)
+            # TODO: save image file
+            # TODO: get OCR output from saved image file
+            # TODO: process ocr output to extract serial number
+
             return self.get(successful_upload=True, data=file)
         return self.get(successful_upload=False)
