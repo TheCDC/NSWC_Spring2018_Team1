@@ -1,7 +1,10 @@
 """Class based views for the webapp."""
 import flask
 from flask.views import MethodView
+from werkzeug import secure_filename
 from . import forms
+from . import ocr
+import os
 
 
 class IndexView(MethodView):
@@ -31,5 +34,11 @@ class IndexView(MethodView):
         form = forms.UploadForm()
         if form.validate_on_submit():
             file = flask.request.files[form.file.name]
+            name = secure_filename(file.filename)
+            old_path = os.path.join(os.path.dirname(__file__), 'uploads', name)
+            # TODO: save image file
+            # TODO: get OCR output from saved image file
+            # TODO: process ocr output to extract serial number
+
             return self.get(successful_upload=True, data=file)
         return self.get(successful_upload=False)
