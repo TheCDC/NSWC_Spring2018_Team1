@@ -39,6 +39,7 @@ class IndexView(MethodView):
             # TODO: save image file
             # TODO: get OCR output from saved image file
             # TODO: process ocr output to extract serial number
+            # TODO: rename the saved file to include the extracted serial number and the date
 
             return self.get(successful_upload=True, data=file)
         return self.get(successful_upload=False)
