@@ -31,5 +31,5 @@ def filter_serial(s):
     """Find the serial number from a string."""
     found = serial_pattern.search(s)
     if found is not None:
-        return found.match
+        return found.string
     return found
