@@ -6,7 +6,15 @@ import re
 serial_pattern = re.compile(r'[A-Z]{3}[0-9]{2}[A-Z]{1}[0-9]{3}-[0-9]{3}')
 
 
+def limit_image_size(image, limit=800):
+    """Shrink an image to prevent OCR from taking forever."""
+    while any(d > limit for d in image.shape):
+        image = cv2.resize(image, (0, 0), fx=0.8, fy=0.8)
+    return image
+
+
 def ocr_file(path, blockSize=115, C=50):
+    """Get the OCR string from an image file."""
     try:
         original = cv2.imread(path)
         gray = cv2.cvtColor(original, cv2.COLOR_RGB2GRAY)
@@ -20,6 +28,7 @@ def ocr_file(path, blockSize=115, C=50):
 
 
 def filter_serial(s):
+    """Find the serial number from a string."""
     found = serial_pattern.search(s)
     if found is not None:
         return found.match
