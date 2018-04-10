@@ -33,10 +33,12 @@ class IndexView(MethodView):
     def post(self, **kwargs):
         form = forms.UploadForm()
         if form.validate_on_submit():
+            uniqueID = 192385791287519
             file = flask.request.files[form.file.name]
-            name = secure_filename(file.filename)
+            name = uniqueID + secure_filename(file.filename)
             old_path = os.path.join(os.path.dirname(__file__), 'uploads', name)
             # TODO: save image file
+            file.save(old_path)
             # TODO: get OCR output from saved image file
             # TODO: process ocr output to extract serial number
             # TODO: rename the saved file to include the extracted serial number and the date
