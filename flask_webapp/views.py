@@ -2,8 +2,8 @@
 import flask
 from flask.views import MethodView
 from werkzeug import secure_filename
-from . import forms
-from . import ocr
+from flask_webapp import forms
+from flask_webapp import ocr
 import os
 
 
@@ -40,6 +40,7 @@ class IndexView(MethodView):
             # TODO: save image file
             file.save(old_path)
             # TODO: get OCR output from saved image file
+            ocr.ocr_file(old_path)
             # TODO: process ocr output to extract serial number
             # TODO: rename the saved file to include the extracted serial number and the date
 

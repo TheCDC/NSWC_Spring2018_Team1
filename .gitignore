@@ -3,7 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# pycharm config files
+# pycharm/intellij config files
 .idea/
 
 # C extensions
