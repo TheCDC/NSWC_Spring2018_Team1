@@ -1,14 +1,18 @@
 """Class based views for the webapp."""
+import datetime
+
 import flask
 from flask.views import MethodView
 from werkzeug import secure_filename
-from . import forms
-from . import ocr
+from flask_webapp import forms
+from flask_webapp import ocr
 import os
 
 
 class IndexView(MethodView):
     """The home  page view."""
+
+    count = 1
 
     def get_template_name(self):
         """Return a string containing the name of this view's template."""
@@ -33,15 +37,19 @@ class IndexView(MethodView):
     def post(self, **kwargs):
         form = forms.UploadForm()
         if form.validate_on_submit():
-            uniqueID = 192385791287519
+            uniqueID = IndexView.count
+            IndexView.count += 1
             file = flask.request.files[form.file.name]
-            name = uniqueID + secure_filename(file.filename)
+            name = uniqueID.__str__() + secure_filename(file.filename)
             old_path = os.path.join(os.path.dirname(__file__), 'uploads', name)
-            # TODO: save image file
+            # save image to file
             file.save(old_path)
-            # TODO: get OCR output from saved image file
+            # get OCR output from saved image file
+            output = ocr.ocr_file(old_path)
             # TODO: process ocr output to extract serial number
+            # serialNumber = ocr.filter_serial(output)
             # TODO: rename the saved file to include the extracted serial number and the date
+            # os.rename(old_path, serialNumber.__str__() + datetime.date.today().__str__())
 
             return self.get(successful_upload=True, data=file)
         return self.get(successful_upload=False)

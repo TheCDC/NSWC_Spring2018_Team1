@@ -1,5 +1,5 @@
 import flask
-from . import views
+from flask_webapp import views
 import random
 app = flask.Flask(__name__)
 # necessary for CSRF token.
