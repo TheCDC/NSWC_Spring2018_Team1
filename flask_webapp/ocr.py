@@ -24,12 +24,14 @@ def ocr_file(path, blockSize=115, C=50):
     threshed = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
                                      cv2.THRESH_BINARY, blockSize, C)
     return pytesseract.image_to_string(
-        Image.fromarray(cv2.cvtColor(gray, cv2.COLOR_GRAY2RGB)))
+        Image.fromarray(cv2.cvtColor(threshed, cv2.COLOR_GRAY2RGB)))
 
 
 def filter_serial(s):
     """Find the serial number from a string."""
+    # return s
     found = serial_pattern.search(s)
+    print(found)
     if found is not None:
-        return found.string
+        return found.group(0)
     return found
