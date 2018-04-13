@@ -46,10 +46,18 @@ class IndexView(MethodView):
             file.save(old_path)
             # get OCR output from saved image file
             output = ocr.ocr_file(old_path)
-            # TODO: process ocr output to extract serial number
-            # serialNumber = ocr.filter_serial(output)
-            # TODO: rename the saved file to include the extracted serial number and the date
-            # os.rename(old_path, serialNumber.__str__() + datetime.date.today().__str__())
+            # process ocr output to extract serial number
+            serialNumber = ocr.filter_serial(output)
+            if not serialNumber:
+                serialNumber = 'NOSERIAL'
 
-            return self.get(successful_upload=True, data=file)
+            # rename the saved file to include the extracted serial number and
+            # the date
+            newname = str(serialNumber) + ' ' + \
+                str(datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S'))
+            newpath = os.path.join(
+                os.path.dirname(__file__), 'uploads', newname)
+            os.rename(old_path, newpath)
+
+            return self.get(successful_upload=True, data=file, serial_number=serialNumber, ocr_output=output)
         return self.get(successful_upload=False)
