@@ -53,7 +53,8 @@ class IndexView(MethodView):
 
             # rename the saved file to include the extracted serial number and
             # the date
-            newname = str(serialNumber) + str(datetime.date.today())
+            newname = str(serialNumber) + ' ' + \
+                str(datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S'))
             newpath = os.path.join(
                 os.path.dirname(__file__), 'uploads', newname)
             os.rename(old_path, newpath)
